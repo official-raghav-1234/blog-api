@@ -1,105 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blog api fetch</title>
   <style>
-    *{margin:0;padding:0;box-sizing:border-box;font-family:Arial, Helvetica, sans-serif;}
-
-    body{background:#f5f7fa;color:#333;}
-
-    .navbar{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      background:#008493;
-      padding:15px 20px;
-      color:#fff;
-    }
-    .navbar h1{font-size:24px;}
-    .navbar .btn button{
-      margin-left:10px;
-      padding:8px 16px;
-      border:none;
-      border-radius:5px;
-      font-size:16px;
-      cursor:pointer;
-      background:#fff;
-      color:#008493;
-      transition:0.3s;
-    }
-    .navbar .btn button:hover{background:#e0f0f3;}
-
-    #div{
-      display:grid;
-      grid-template-columns:repeat(auto-fill, minmax(300px, 1fr));
-      gap:20px;
-      padding:20px;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
     }
 
-    .card{
-      background:#fff;
-      border-radius:10px;
-      padding:20px;
-      box-shadow:0 4px 12px rgba(0,0,0,0.1);
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      transition:transform 0.2s;
+    body {
+      background: #f5f7fa;
+      color: #333;
     }
-    .card:hover{transform:translateY(-5px);}
-    .card h2{font-size:22px;text-align:center;color:#008493;}
-    .card h4{font-size:16px;color:#555;}
-    .card p{flex-grow:1;font-size:15px;color:#333;overflow:auto;}
 
-    .btn-group{display:flex;justify-content:flex-end;gap:10px;}
-    .btn-group button{
-      padding:6px 12px;
-      border:none;
-      border-radius:5px;
-      cursor:pointer;
-      font-size:14px;
-      transition:0.3s;
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #008493;
+      padding: 15px 20px;
+      color: #fff;
     }
-    .btn-group .delete{background:#ff6b6b;color:#fff;}
-    .btn-group .delete:hover{background:#e03e3e;}
 
-    .btn-group .edit{background:#008493;color:#fff;}
-    .btn-group .edit:hover{background:#006f7c;}
+    .navbar h1 {
+      font-size: 24px;
+    }
 
-    #createblog{
-      background:#fff;
-      width:90%;
-      max-width:600px;
-      margin:20px auto;
-      padding:20px;
-      border-radius:10px;
-      box-shadow:0 4px 12px rgba(0,0,0,0.1);
+    .navbar .btn button {
+      margin-left: 10px;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      background: #fff;
+      color: #008493;
+      transition: 0.3s;
     }
-    #createblog.deactive{display:none;}
-    #createblog label{display:block;margin-bottom:10px;font-weight:bold;}
-    #createblog input, #createblog textarea{
-      width:100%;
-      padding:10px;
-      margin-bottom:15px;
-      border:1px solid #ccc;
-      border-radius:5px;
-      font-size:15px;
+
+    .navbar .btn button:hover {
+      background: #e0f0f3;
     }
-    #createblog textarea{resize:vertical;min-height:100px;}
-    #createblog button{
-      padding:10px 20px;
-      border:none;
-      border-radius:5px;
-      font-size:16px;
-      cursor:pointer;
-      margin-right:10px;
+
+    #div {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+      padding: 20px;
     }
-    #createblog button[type="submit"]{background:#008493;color:#fff;}
-    #createblog button[type="reset"]{background:#ff6b6b;color:#fff;}
+
+    .card {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card h2 {
+      font-size: 22px;
+      text-align: center;
+      color: #008493;
+    }
+
+    .card h4 {
+      font-size: 16px;
+      color: #555;
+    }
+
+    .card p {
+      flex-grow: 1;
+      font-size: 15px;
+      color: #333;
+      overflow: auto;
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .btn-group button {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: 0.3s;
+    }
+
+    .btn-group .delete {
+      background: #ff6b6b;
+      color: #fff;
+    }
+
+    .btn-group .delete:hover {
+      background: #e03e3e;
+    }
+
+    .btn-group .edit {
+      background: #008493;
+      color: #fff;
+    }
+
+    .btn-group .edit:hover {
+      background: #006f7c;
+    }
+
+    #createblog {
+      background: #fff;
+      width: 90%;
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    #createblog.deactive {
+      display: none;
+    }
+
+    #createblog label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    #createblog input,
+    #createblog textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 15px;
+    }
+
+    #createblog textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    #createblog button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-right: 10px;
+    }
+
+    #createblog button[type="submit"] {
+      background: #008493;
+      color: #fff;
+    }
+
+    #createblog button[type="reset"] {
+      background: #ff6b6b;
+      color: #fff;
+    }
   </style>
 </head>
+
 <body>
   <nav>
     <div class="navbar">
@@ -127,6 +203,7 @@
 
   <div id="div"></div>
 
-<script src="./code/code.js"></script>
+  <script src="./code/code.js"></script>
 </body>
+
 </html>

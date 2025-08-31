@@ -18,7 +18,10 @@
       let title = document.getElementById("title").value.trim();
       let Author = document.getElementById("Author").value.trim();
       let Content = document.getElementById("Content").value.trim();
-      const data = {title, author: Author, content: Content};
+      const data = {title,
+         author: Author,
+          content: Content
+        };
 
       const createblog = async(data)=>{
         try{
@@ -82,7 +85,6 @@
       document.getElementById("title").value = title;
       document.getElementById("Author").value = author;
       document.getElementById("Content").value = content;
-      // You can implement update API here same like create
     }
 
     showAllBlogs();

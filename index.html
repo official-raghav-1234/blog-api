@@ -6,173 +6,235 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blog api fetch</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, Helvetica, sans-serif;
-    }
+   * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
 
-    body {
-      background: #f5f7fa;
-      color: #333;
-    }
+body {
+  background: #f5f7fa;
+  color: #333;
+}
 
-    .navbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #008493;
-      padding: 15px 20px;
-      color: #fff;
-    }
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #008493;
+  padding: 15px 20px;
+  color: #fff;
+  flex-wrap: wrap; /* responsive */
+}
 
-    .navbar h1 {
-      font-size: 24px;
-    }
+.navbar h1 {
+  font-size: 24px;
+}
 
-    .navbar .btn button {
-      margin-left: 10px;
-      padding: 8px 16px;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-      background: #fff;
-      color: #008493;
-      transition: 0.3s;
-    }
+.navbar .btn {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
 
-    .navbar .btn button:hover {
-      background: #e0f0f3;
-    }
+.navbar .btn button {
+  margin: 5px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  background: #fff;
+  color: #008493;
+  transition: 0.3s;
+}
 
-    #div {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 20px;
-      padding: 20px;
-    }
+.navbar .btn button:hover {
+  background: #e0f0f3;
+}
 
-    .card {
-      background: #fff;
-      border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      transition: transform 0.2s;
-    }
+#div {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
 
-    .card:hover {
-      transform: translateY(-5px);
-    }
+.card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: transform 0.2s;
+}
 
-    .card h2 {
-      font-size: 22px;
-      text-align: center;
-      color: #008493;
-    }
+.card:hover {
+  transform: translateY(-5px);
+}
 
-    .card h4 {
-      font-size: 16px;
-      color: #555;
-    }
+.card h2 {
+  font-size: 20px;
+  text-align: center;
+  color: #008493;
+}
 
-    .card p {
-      flex-grow: 1;
-      font-size: 15px;
-      color: #333;
-      overflow: auto;
-    }
+.card h4 {
+  font-size: 15px;
+  color: #555;
+}
 
-    .btn-group {
-      display: flex;
-      justify-content: flex-end;
-      gap: 10px;
-    }
+.card p {
+  flex-grow: 1;
+  font-size: 14px;
+  color: #333;
+  overflow: auto;
+}
 
-    .btn-group button {
-      padding: 6px 12px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 14px;
-      transition: 0.3s;
-    }
+.btn-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap; /* responsive */
+}
 
-    .btn-group .delete {
-      background: #ff6b6b;
-      color: #fff;
-    }
+.btn-group button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.3s;
+}
 
-    .btn-group .delete:hover {
-      background: #e03e3e;
-    }
+.btn-group .delete {
+  background: #ff6b6b;
+  color: #fff;
+}
 
-    .btn-group .edit {
-      background: #008493;
-      color: #fff;
-    }
+.btn-group .delete:hover {
+  background: #e03e3e;
+}
 
-    .btn-group .edit:hover {
-      background: #006f7c;
-    }
+.btn-group .edit {
+  background: #008493;
+  color: #fff;
+}
 
-    #createblog {
-      background: #fff;
-      width: 90%;
-      max-width: 600px;
-      margin: 20px auto;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
+.btn-group .edit:hover {
+  background: #006f7c;
+}
 
-    #createblog.deactive {
-      display: none;
-    }
+#createblog {
+  background: #fff;
+  width: 90%;
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
 
-    #createblog label {
-      display: block;
-      margin-bottom: 10px;
-      font-weight: bold;
-    }
+#createblog.deactive {
+  display: none;
+}
 
-    #createblog input,
-    #createblog textarea {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-size: 15px;
-    }
+#createblog label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
 
-    #createblog textarea {
-      resize: vertical;
-      min-height: 100px;
-    }
+#createblog input,
+#createblog textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 15px;
+}
 
-    #createblog button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-      margin-right: 10px;
-    }
+#createblog textarea {
+  resize: vertical;
+  min-height: 100px;
+}
 
-    #createblog button[type="submit"] {
-      background: #008493;
-      color: #fff;
-    }
+#createblog button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin: 5px 5px 0 0;
+}
 
-    #createblog button[type="reset"] {
-      background: #ff6b6b;
-      color: #fff;
-    }
+#createblog button[type="submit"] {
+  background: #008493;
+  color: #fff;
+}
+
+#createblog button[type="reset"] {
+  background: #ff6b6b;
+  color: #fff;
+}
+
+/* 📱 Responsive Media Queries */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .navbar h1 {
+    margin-bottom: 10px;
+  }
+
+  #div {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 15px;
+  }
+
+  .card h2 {
+    font-size: 18px;
+  }
+
+  .card p {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar h1 {
+    font-size: 20px;
+  }
+
+  .navbar .btn button {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+
+  #createblog {
+    padding: 15px;
+  }
+
+  #createblog input,
+  #createblog textarea {
+    font-size: 14px;
+  }
+
+  #createblog button {
+    font-size: 14px;
+    padding: 8px 14px;
+  }
+}
+
   </style>
 </head>
 

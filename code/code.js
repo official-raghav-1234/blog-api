@@ -79,7 +79,7 @@
       }catch(error){console.log("Error deleting blog:", error);}
     }
 
-    // Edit Blog (populate form)
+    // Edit Blog 
     function editBlog(id, title, author, content){
       showCreateBlogForm();
       document.getElementById("title").value = title;
